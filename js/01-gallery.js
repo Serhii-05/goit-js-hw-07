@@ -1,11 +1,7 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
-
-const divEl = document.querySelector('.js-gallery');
-
-
+const divEl = document.querySelector('.gallery');
 
 
 createGallery(galleryItems);
@@ -25,6 +21,28 @@ function createGallery(items) {
       </a>
 </div>`
   ).join('');
-    divEl.innerHTML = markup
+    divEl.insertAdjacentHTML('beforeend', markup);
 };
+
+divEl.addEventListener('click', onGalleryClick);
+
+function onGalleryClick(event) {
+  if (event.target.tagName !== 'IMG') {
+    return;
+  }
+  event.preventDefault();
+
+  modalShow(event.target.dataset.source);
+}
+
+function modalShow(src) {
+  const  instance = basicLightbox.create(
+    `
+    <div class="modal">
+        <img src="${src}" style="height:100vh; display:block"></img>
+    </div>
+`
+  );
+  instance.show();
+}
 
